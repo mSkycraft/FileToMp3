@@ -3,14 +3,16 @@ from gtts import gTTS
 import pdfplumber
 from pathlib import Path
 
-def text_to_audio(text,name,lg):
+def text_to_audio(text,name:str,lg):
     text = ''.join(text)
     text = text.replace("\n",'')
     afile = gTTS(text,lang=lg,slow=False)
-    afile.save(f'{name}.mp3')
+    fname = name.split('.')[0]
+    afile.save(f'{fname}.mp3')
 
 def pdf_to_audio(path,lg):
     try:
+        print(': Выбран режим чтения pdf файла')
         pdf = pdfplumber.PDF(open(path,'rb'))
         text = [ptext.exctract_text() for ptext in pdf.pages]
 
@@ -23,8 +25,7 @@ def pdf_to_audio(path,lg):
 
 def txt_to_audio(path,lg):
     try:
-        print(f': Файл {Path(path).name}')
-        print(': Начата обработка файла...')
+        print(': Выбран режим чтения txt файла')
         ftxt = open(path,'r')
         text = ftxt.readlines()
         text_to_audio(text,Path(path).name,lg)
@@ -38,7 +39,6 @@ def controller(path,lg='en'):
     
     print(f': Файл {Path(path).name}')
     print(': Начата обработка файла...')
-
     if  Path(path).is_file():
         match Path(path).suffix:
             case '.pdf': return pdf_to_audio(path,lg)

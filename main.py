@@ -3,8 +3,8 @@ from defs import controller
 
 def main():
     tprint("FILE>>TO>>AUDIO",'bulbhead')
-    pdf = input('Введите путь к pdf файлу: ')
-    lang = input('Введите язык озвучивания: ')
+    pdf = input('Введите путь к файлу: ')
+    lang = input('Введите язык озвучивания ru/en: ')
     print(controller(pdf,lang))
 
 if __name__ == '__main__':
